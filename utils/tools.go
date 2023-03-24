@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"encoding/json"
@@ -9,8 +9,9 @@ import (
 
 func GetSettingFilePath() string {
 	var FilePath string
-	if len(os.Args) == 1 {
-		FilePath = "./setting.json"
+	if len(os.Args) <= 1 {
+		fmt.Printf("请选择一个配置文件\n")
+		os.Exit(1)
 	} else {
 		FilePath = os.Args[len(os.Args)-1]
 	}

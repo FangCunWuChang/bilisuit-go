@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"fmt"
+	"http_golang/utils"
 	"time"
 )
 
@@ -46,19 +47,18 @@ func H1ReceiveResponse(client *tls.Conn, BufLen int64) []byte {
 }
 
 func main() {
-	fmt.Printf("%v\n", "http1_socket_golang")
-	var filePath = GetSettingFilePath()
-	var headers, startTime, delayTime, formData = ReaderSetting(filePath)
+	var filePath = utils.GetSettingFilePath()
+	var headers, startTime, delayTime, formData = utils.ReaderSetting(filePath)
 	var SleepTimeNumber = (float64(delayTime) / 1000) * float64(time.Second)
 
 	var MessageHeader, MessageBody = BuildMessage(headers, formData)
 
-	WaitLocalBiliTimer(startTime, 3)
+	utils.WaitLocalBiliTimer(startTime, 3)
 
 	var client = H1CreateTlsConnection(headers["host"])
 	H1SendMessage(client, MessageHeader)
 
-	WaitServerBiliTimer(startTime, 4)
+	utils.WaitServerBiliTimer(startTime, 4)
 
 	time.Sleep(time.Duration(SleepTimeNumber))
 
