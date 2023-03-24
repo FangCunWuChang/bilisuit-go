@@ -1,3 +1,3 @@
-module http_golang
+module bilisuit
 
 go 1.19
